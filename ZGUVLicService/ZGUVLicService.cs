@@ -20,8 +20,9 @@ namespace ZGUVLicService
 
         protected override void OnStart(string[] args)
         {
-            Thread Thread_sms = new Thread(new ParameterizedThreadStart(SMSProcessor.DoWork));
-            Thread_sms.Start(SMSProcessor);
+            GenerateSqlite3LicRec GenerateSqlite3LicRec = new GenerateSqlite3LicRec();
+            Thread Thread_sms = new Thread(new ParameterizedThreadStart(GenerateSqlite3LicRec.DoWork));
+            Thread_sms.Start(GenerateSqlite3LicRec);
         }
 
         protected override void OnStop()
