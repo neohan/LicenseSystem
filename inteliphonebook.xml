@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<license>
+  <level>1</level><!--许可版本-->
+  <type>DAIRUPENG-FREESWITCH-INTELIPHONEBOOK</type><!--许可类型 例如，录音 cti，微信等等，加过密的信息-->
+  <endpoint>0FEBFBFF00020655-</endpoint><!--由macid cpuid diskid三项数据组成，加过密的信息-->
+  <createtime>2015-01-01 16:07:51</createtime><!--，加过密的信息-->
+  <endtime>2055-01-01</endtime>
+  <guid></guid><!--每次创建许可时生成的GUID值-->
+  <features>
+    <feature name="versiontype" value="19389823"/>
+    <feature name="siptrunk" value="30"/>
+  </features>
+  <signature>49879ECCC74AB9F785A8D592A99880BAE5206B2046C7E06FD8CBE81AEAB7C2D8CFF4A36044927E62CCA335BCCE8DBFD1</signature>
+</license>
+
+<!--&VEN_VMWARE_&PROD_VMWARE_VIRTUAL_S\5&1982005&0&000000-00-0C-29-A3-72-00-->
