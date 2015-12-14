@@ -23,6 +23,8 @@ namespace ZGUVLicService
             generateSqlite3LicRec.Initialize();
             while (true)
             {
+                //读许可配置文件
+                //访问sqlite3数据库，写入数据
                 Thread.Sleep(1000);
             }
             log.Info("Generate Sqlite3 License Record Thread Exiting...");
