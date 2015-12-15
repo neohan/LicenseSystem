@@ -58,6 +58,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShareMemory.cs" />
     <Compile Include="ZGUVLicService.cs">
       <SubType>Component</SubType>
     </Compile>

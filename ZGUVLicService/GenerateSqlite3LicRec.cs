@@ -306,9 +306,28 @@ namespace ZGUVLicService
             GenerateSqlite3LicRec generateSqlite3LicRec = (GenerateSqlite3LicRec)stateInfo;
             GenerateSqlite3LicRec.GenerateSqlite3LicRecObj = generateSqlite3LicRec;
             generateSqlite3LicRec.Initialize();
+            ShareMemory shareMem = new ShareMemory();
             while (true)
             {
+                //启动共享内存
+                if ( shareMem.IsInited() == false )
+                {
+                    if ( shareMem.Init("ED8753D8-05F1-4CD4-A966-225CE47A203EZGUVWILCOM") == 0 )
+                    {
+                        log.Info("Shared memory created.\r\n");
+                    }
+                    else
+                    {
+                        log.Info("Creagte shared memory failure.\r\n");
+                        Thread.Sleep(5000);
+                        continue;
+                    }
+                }
                 //读许可配置文件
+                string monitorExts;
+                int nMonitorExts;
+                generateSqlite3LicRec.LoadLicFile(out monitorExts);
+                try { nMonitorExts = Convert.ToInt32(monitorExts); }catch(Exception e){nMonitorExts = 0;}
                 //访问sqlite3数据库，写入数据
                 Thread.Sleep(1000);
             }
