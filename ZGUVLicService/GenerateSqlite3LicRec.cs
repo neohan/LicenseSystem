@@ -312,18 +312,17 @@ namespace ZGUVLicService
                 //启动共享内存
                 if ( shareMem.IsInited() == false )
                 {
-                    if ( shareMem.Init("ED8753D8-05F1-4CD4-A966-225CE47A203EZGUVWILCOM") == 0 )
-                    {
+                    int ret = shareMem.Init("ED8753D8-05F1-4CD4-A966-225CE47A203EZGUVWILCOM");
+                    if ( ret == 0 )
                         log.Info("Shared memory created.\r\n");
-                    }
                     else
                     {
-                        log.Info("Creagte shared memory failure.\r\n");
+                        log.Info(String.Format("Create shared memory failure. return code:{0}\r\n", ret));
                         Thread.Sleep(5000);
                         continue;
                     }
                 }
-                //读许可配置文件
+                //读许可配置文件。本服务程序与zguv服务程序部署在同一个目录下。
                 string monitorExts;
                 int nMonitorExts;
                 generateSqlite3LicRec.LoadLicFile(out monitorExts);
