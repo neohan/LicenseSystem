@@ -337,16 +337,20 @@ namespace ZGUVLicService
                 //访问sqlite3数据库，写入数据
                 if ( bdbopened == false )
                 {
+                    string file = "";
                     try
                     {
                         int pos = Application.ExecutablePath.LastIndexOf("\\");
                         string path = Application.ExecutablePath.Substring(0, pos);
-                        generateSqlite3LicRec.sqliteconn.ConnectionString = String.Format("Data Source={0}\\zguv.db", path);
+                        file = String.Format("Data Source={0}\\zguv.db", path);
+                        generateSqlite3LicRec.sqliteconn.ConnectionString = file;
                         generateSqlite3LicRec.sqliteconn.Open();
                         bdbopened = true;
+                        log.Info(String.Format("Open file:{0} suc.\r\n", file));
                     }
                     catch (Exception e)
                     {
+                        log.Info(String.Format("Open file:{0} failure.\r\n", file));
                         bdbopened = false;
                         Thread.Sleep(5000);
                         continue;
