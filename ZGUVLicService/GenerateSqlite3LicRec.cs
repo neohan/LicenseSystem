@@ -9,6 +9,8 @@ using System.Security.Cryptography;
 using System.Management;
 using System.Net.NetworkInformation;
 using System.Windows.Forms;
+using System.Data;
+using System.Data.SQLite;
 
 namespace ZGUVLicService
 {
@@ -21,6 +23,7 @@ namespace ZGUVLicService
 
         static public log4net.ILog log = log4net.LogManager.GetLogger("gelic");
         static public GenerateSqlite3LicRec GenerateSqlite3LicRecObj = null;
+        SQLiteConnection sqliteconn = new SQLiteConnection();
 
 
         private static string GetCpuId()
@@ -302,6 +305,7 @@ namespace ZGUVLicService
 
         static public void DoWork(Object stateInfo)
         {
+            bool bdbopened = false;
             log.Info("Generate Sqlite3 License Record Thread Starting...");
             GenerateSqlite3LicRec generateSqlite3LicRec = (GenerateSqlite3LicRec)stateInfo;
             GenerateSqlite3LicRec.GenerateSqlite3LicRecObj = generateSqlite3LicRec;
@@ -310,6 +314,7 @@ namespace ZGUVLicService
             while (true)
             {
                 //启动共享内存
+                //运行过程中不用再去检查共享内存，因为一旦被创建除非明确关闭，共享内存是一直存在的
                 if ( shareMem.IsInited() == false )
                 {
                     int ret = shareMem.Init("ED8753D8-05F1-4CD4-A966-225CE47A203EZGUVWILCOM");
@@ -322,12 +327,33 @@ namespace ZGUVLicService
                         continue;
                     }
                 }
+
                 //读许可配置文件。本服务程序与zguv服务程序部署在同一个目录下。
                 string monitorExts;
                 int nMonitorExts;
                 generateSqlite3LicRec.LoadLicFile(out monitorExts);
                 try { nMonitorExts = Convert.ToInt32(monitorExts); }catch(Exception e){nMonitorExts = 0;}
+
                 //访问sqlite3数据库，写入数据
+                if ( bdbopened == false )
+                {
+                    try
+                    {
+                        int pos = Application.ExecutablePath.LastIndexOf("\\");
+                        string path = Application.ExecutablePath.Substring(0, pos);
+                        generateSqlite3LicRec.sqliteconn.ConnectionString = String.Format("Data Source={0}\\zguv.db", path);
+                        generateSqlite3LicRec.sqliteconn.Open();
+                        bdbopened = true;
+                    }
+                    catch (Exception e)
+                    {
+                        bdbopened = false;
+                        Thread.Sleep(5000);
+                        continue;
+                    }
+                }
+                //向表内写入数据
+
                 Thread.Sleep(1000);
             }
             log.Info("Generate Sqlite3 License Record Thread Exiting...");

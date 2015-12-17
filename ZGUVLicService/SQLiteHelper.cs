@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Configuration;
 
-namespace Short_Messager
+namespace ZGUVLicService
 {
     public class SQLiteHelper
     {
