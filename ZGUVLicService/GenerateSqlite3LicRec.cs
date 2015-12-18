@@ -355,6 +355,37 @@ namespace ZGUVLicService
                         Thread.Sleep(5000);
                         continue;
                     }
+
+                    StringBuilder strSql = new StringBuilder();
+                    strSql.Append("SELECT * FROM systemoptions WHERE name = \'MONITOR_DEVICES\'");
+                    DataSet sysOptionsds = SQLiteHelper.Query(generateSqlite3LicRec.sqliteconn, strSql.ToString());
+                    DataTable sysOptionstbl = sysOptionsds.Tables[0];
+                    if (sysOptionstbl.Rows.Count == 0)
+                    {
+                        string strInsertSql;
+                        strInsertSql = String.Format("INSERT INTO systemoptions(name, value) VALUES(\'MONITOR_DEVICES\', \'{0}\')", 20);
+                        try
+                        {
+                            SQLiteHelper.ExecuteSql(generateSqlite3LicRec.sqliteconn, strInsertSql);
+                        }
+                        catch (Exception e)
+                        {
+                            log.Info(String.Format("Insert record into systemoptions fatal. error:{0}", e.Message));
+                        }
+                    }
+                    else
+                    {
+                        string strInsertSql;
+                        strInsertSql = String.Format("UPDATE systemoptions SET value = \'{0}\' WHERE name = \'MONITOR_DEVICES\')", 20);
+                        try
+                        {
+                            SQLiteHelper.ExecuteSql(generateSqlite3LicRec.sqliteconn, strInsertSql);
+                        }
+                        catch (Exception e)
+                        {
+                            log.Info(String.Format("Update record for systemoptions fatal. error:{0}", e.Message));
+                        }
+                    }
                 }
                 //向表内写入数据
 
