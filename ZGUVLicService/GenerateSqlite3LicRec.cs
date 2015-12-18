@@ -363,7 +363,7 @@ namespace ZGUVLicService
                     if (sysOptionstbl.Rows.Count == 0)
                     {
                         string strInsertSql;
-                        strInsertSql = String.Format("INSERT INTO systemoptions(name, value) VALUES(\'MONITOR_DEVICES\', \'{0}\')", 20);
+                        strInsertSql = String.Format("INSERT INTO systemoptions(name, value) VALUES(\'MONITOR_DEVICES\', \'{0}\')", nMonitorExts);
                         try
                         {
                             SQLiteHelper.ExecuteSql(generateSqlite3LicRec.sqliteconn, strInsertSql);
@@ -376,7 +376,7 @@ namespace ZGUVLicService
                     else
                     {
                         string strInsertSql;
-                        strInsertSql = String.Format("UPDATE systemoptions SET value = \'{0}\' WHERE name = \'MONITOR_DEVICES\')", 20);
+                        strInsertSql = String.Format("UPDATE systemoptions SET value = \'{0}\' WHERE name = \'MONITOR_DEVICES\')", nMonitorExts);
                         try
                         {
                             SQLiteHelper.ExecuteSql(generateSqlite3LicRec.sqliteconn, strInsertSql);
