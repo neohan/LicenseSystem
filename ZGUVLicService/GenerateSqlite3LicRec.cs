@@ -350,7 +350,7 @@ namespace ZGUVLicService
                     }
                     catch (Exception e)
                     {
-                        log.Info(String.Format("Open file:{0} failure.\r\n", file));
+                        log.Info(String.Format("Open file:{0} failure.{1}\r\n", file, e.Message()));
                         bdbopened = false;
                         Thread.Sleep(5000);
                         continue;
@@ -358,7 +358,17 @@ namespace ZGUVLicService
 
                     StringBuilder strSql = new StringBuilder();
                     strSql.Append("SELECT * FROM systemoptions WHERE name = \'MONITOR_DEVICES\'");
-                    DataSet sysOptionsds = SQLiteHelper.Query(generateSqlite3LicRec.sqliteconn, strSql.ToString());
+                    DataSet sysOptionsds = null;
+                    try
+                    {
+                        sysOptionsds = SQLiteHelper.Query(generateSqlite3LicRec.sqliteconn, strSql.ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        log.Info(String.Format("Check systemoptions fatal. error:{0}", e.Message));
+                        Thread.Sleep(5000);
+                        continue;
+                    }                        
                     DataTable sysOptionstbl = sysOptionsds.Tables[0];
                     if (sysOptionstbl.Rows.Count == 0)
                     {
@@ -370,7 +380,7 @@ namespace ZGUVLicService
                         }
                         catch (Exception e)
                         {
-                            log.Info(String.Format("Insert record into systemoptions fatal. error:{0}", e.Message));
+                            log.Info(String.Format("Insert into systemoptions fatal. error:{0}", e.Message));
                         }
                     }
                     else
@@ -383,11 +393,10 @@ namespace ZGUVLicService
                         }
                         catch (Exception e)
                         {
-                            log.Info(String.Format("Update record for systemoptions fatal. error:{0}", e.Message));
+                            log.Info(String.Format("Update for systemoptions fatal. error:{0}", e.Message));
                         }
                     }
                 }
-                //向表内写入数据
 
                 Thread.Sleep(1000);
             }
