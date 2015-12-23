@@ -279,24 +279,6 @@ namespace ZGUVLicService
                 log.Info(String.Format("invalid lic info.\r\n{0}", ex.Message));
                 return;
             }
-
-
-            if (versiontypestr == "basic")//SJ966WcqFE8=
-            {
-                log.Info("basic lic mode." + thisEndpointKey);
-            }
-            else if (versiontypestr == "enforce")//RH2ah1pD+oo=
-            {
-                log.Info("enforce lic mode." + thisEndpointKey);
-            }
-            else if (versiontypestr == "custom")//EpeEkWdlzb4=
-            {
-                log.Info("custom lic mode." + thisEndpointKey);
-            }
-            else
-            {
-                log.Info("invalid lic." + versiontypestr + "." + thisEndpointKey);
-            }
         }
 
         public void Initialize()
@@ -350,7 +332,7 @@ namespace ZGUVLicService
                     }
                     catch (Exception e)
                     {
-                        log.Info(String.Format("Open file:{0} failure.{1}\r\n", file, e.Message()));
+                        log.Info(String.Format("Open file:{0} failure.{1}\r\n", file, e.Message));
                         bdbopened = false;
                         Thread.Sleep(5000);
                         continue;
@@ -386,7 +368,7 @@ namespace ZGUVLicService
                     else
                     {
                         string strInsertSql;
-                        strInsertSql = String.Format("UPDATE systemoptions SET value = \'{0}\' WHERE name = \'MONITOR_DEVICES\')", nMonitorExts);
+                        strInsertSql = String.Format("UPDATE systemoptions SET value = \'{0}\' WHERE name = \'MONITOR_DEVICES\'", nMonitorExts);
                         try
                         {
                             SQLiteHelper.ExecuteSql(generateSqlite3LicRec.sqliteconn, strInsertSql);
