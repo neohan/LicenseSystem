@@ -21,7 +21,7 @@ namespace IPBLicDateChange
         {
             int pos = Application.ExecutablePath.LastIndexOf("\\");
             string path = Application.ExecutablePath.Substring(0, pos);
-            string file = String.Format("Data Source={0}\\InteliPhoneBookService.exe", path);
+            string file = String.Format("{0}\\InteliPhoneBookService.exe", path);
             DateTime now = DateTime.Now;
             File.SetCreationTime(file, now);
         }
