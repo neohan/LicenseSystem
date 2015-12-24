@@ -337,7 +337,9 @@ namespace ZGUVLicService
                         Thread.Sleep(5000);
                         continue;
                     }
-
+                }
+                if ( bdbopened )
+                {
                     StringBuilder strSql = new StringBuilder();
                     strSql.Append("SELECT * FROM systemoptions WHERE name = \'MONITOR_DEVICES\'");
                     DataSet sysOptionsds = null;
@@ -380,7 +382,7 @@ namespace ZGUVLicService
                     }
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(10000);
             }
             log.Info("Generate Sqlite3 License Record Thread Exiting...");
         }
